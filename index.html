@@ -3,18 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diretiva NIS2 em Portugal: Guia Interativo</title>
+    <title>Diretiva NIS2 em Portugal: Guia Interativo | Decreto-Lei n.º 125/2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Visualization & Content Choices:
-    - Report Info: Transposition Timeline -> Goal: Show current status & future dates -> Viz/Method: HTML/CSS static timeline graphic -> Interaction: Static with clear labels -> Justification: Clear visual of temporal data.
-    - Report Info: Scope Expansion (1k to 7-9k entities) -> Goal: Show magnitude of change -> Viz/Method: Chart.js Bar Chart (Old vs. New) -> Interaction: Static -> Justification: Simple comparison.
-    - Report Info: Entity Classification Criteria (EE/EI, size, sector) -> Goal: Help users self-assess -> Viz/Method: HTML form (dropdowns, radio buttons) + JS logic -> Interaction: User input triggers JS to suggest classification -> Justification: Interactive tool for practical application.
-    - Report Info: Sanction levels (EE/EI fines) -> Goal: Clearly present penalties -> Viz/Method: Dynamic HTML cards updating on button click (EE/EI) -> Interaction: User clicks button, relevant sanction card shown -> Justification: Direct and clear display of financial/other risks.
-    - Report Info: Minimum Security Measures -> Goal: Present detailed requirements accessibly -> Viz/Method: HTML/JS accordion list -> Interaction: Click to expand/collapse details -> Justification: Organizes long list compactly.
-    - Report Info: Incident Notification Deadlines -> Goal: Visualize reporting timeframes -> Viz/Method: HTML/CSS static graphic timeline -> Interaction: Static -> Justification: Clear visual of time constraints.
-    CONFIRMING NO SVG/Mermaid used. All charts via Chart.js (Canvas). Diagrams via HTML/CSS.
-    -->
     <style>
         body { font-family: 'Inter', sans-serif; }
         .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
@@ -25,7 +16,10 @@
         .timeline { display: flex; flex-direction: column; position: relative; margin: 20px 0; }
         .timeline::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background-color: #cbd5e1; }
         .timeline-item { display: flex; margin-bottom: 20px; position: relative; }
-        .timeline-dot { width: 16px; height: 16px; background-color: #0284c7; border-radius: 50%; position: absolute; left: 13px; top: 5px; z-index: 1; }
+        .timeline-dot { width: 16px; height: 16px; border-radius: 50%; position: absolute; left: 13px; top: 5px; z-index: 1; }
+        .timeline-dot.completed { background-color: #16a34a; }
+        .timeline-dot.current { background-color: #f59e0b; box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3); }
+        .timeline-dot.upcoming { background-color: #0284c7; }
         .timeline-date { min-width: 180px; padding-right: 20px; text-align: right; font-weight: bold; color: #475569; margin-left: -120px; }
         .timeline-content-container { margin-left: 40px; background-color: #f8fafc; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex-grow: 1; }
         .section-title { font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; border-bottom: 2px solid #60a5fa; padding-bottom: 0.5rem; }
@@ -34,9 +28,11 @@
         .highlight-text { color: #0284c7; font-weight: 600; }
         .tab-button { padding: 0.5rem 1rem; border-radius: 0.375rem; background-color: #e0f2fe; color: #0c4a6e; margin-right: 0.5rem; cursor: pointer; transition: background-color 0.3s; }
         .tab-button.active { background-color: #0284c7; color: white; }
-        .tooltip { position: relative; display: inline-block; }
-        .tooltip .tooltiptext { visibility: hidden; width: 220px; background-color: #555; color: #fff; text-align: center; border-radius: 6px; padding: 5px 0; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -110px; opacity: 0; transition: opacity 0.3s; }
-        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+        .status-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .badge-completed { background-color: #dcfce7; color: #166534; }
+        .badge-current { background-color: #fef3c7; color: #92400e; }
+        .badge-upcoming { background-color: #dbeafe; color: #1e40af; }
+        .alert-box { background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 1rem; }
     </style>
 </head>
 <body class="bg-stone-50 text-gray-800">
@@ -79,13 +75,15 @@
 
     <main class="container mx-auto p-4 sm:p-6 lg:p-8">
         <section id="inicio" class="pt-8 pb-12 text-center">
-            <h2 class="text-4xl font-extrabold text-sky-800 mb-4">Bem-vindo ao Guia Interativo da Diretiva NIS2 em Portugal</h2>
+            <h2 class="text-4xl font-extrabold text-sky-800 mb-4">Guia Interativo da Diretiva NIS2 em Portugal</h2>
+            <p class="text-sm text-sky-600 font-semibold mb-4">Atualizado com base no Decreto-Lei n.º 125/2025, de 4 de dezembro</p>
             <p class="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
-                A Diretiva NIS2 (UE 2022/2555) representa uma atualização crucial na legislação de cibersegurança da União Europeia, com o objetivo de reforçar a resiliência digital em todos os Estados-Membros. Esta aplicação interativa foi criada para o ajudar a compreender o estado atual da NIS2 em Portugal, os seus impactos, requisitos e os próximos passos para a conformidade.
+                A Diretiva NIS2 (UE 2022/2555) representa uma atualização crucial na legislação de cibersegurança da União Europeia, com o objetivo de reforçar a resiliência digital em todos os Estados-Membros. Esta aplicação interativa foi criada para o ajudar a compreender o novo Regime Jurídico da Cibersegurança em Portugal, os seus impactos, requisitos e os próximos passos para a conformidade.
             </p>
-            <p class="text-md text-gray-600 mb-8 max-w-2xl mx-auto">
-                Portugal está em processo de transposição da diretiva, com a nova lei prevista para entrar em vigor a <span class="highlight-text">1 de março de 2026</span>. Explore as secções abaixo para se manter informado e preparado.
-            </p>
+            <div class="alert-box max-w-2xl mx-auto text-left mb-8">
+                <p class="text-amber-800 font-semibold mb-1">⚠️ Estado Atual — Março 2026</p>
+                <p class="text-amber-700 text-sm">O Decreto-Lei n.º 125/2025 foi publicado em 4 de dezembro de 2025 e entra em vigor a <span class="font-bold">3 de abril de 2026</span>. O regulamento de aplicação do CNCS encontra-se em consulta pública (até 22 de abril de 2026). As entidades têm 20 dias úteis após a entrada em vigor para designar o Responsável de Cibersegurança e o Ponto de Contacto Permanente.</p>
+            </div>
             <a href="#o-que-e" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300">Comece a Explorar</a>
         </section>
 
@@ -98,7 +96,7 @@
                 <div>
                     <h3 class="sub-section-title">Contextualização e Evolução</h3>
                     <p class="text-gray-600 mb-3">A Diretiva NIS2 (Diretiva (UE) 2022/2555) foi publicada a 27 de dezembro de 2022, sucedendo à NIS1. A NIS1, embora pioneira, enfrentou desafios como adoção inconsistente e requisitos variáveis. A NIS2 surge para colmatar estas lacunas, face a um cenário de ameaças cibernéticas em constante evolução, caracterizado por ataques mais frequentes e sofisticados, e o aumento da dependência digital.</p>
-                    <p class="text-gray-600">A diretiva é prospetiva, considerando vetores de ataque emergentes como o uso de IA em *phishing* e os futuros desafios da computação quântica.</p>
+                    <p class="text-gray-600">A diretiva é prospetiva, considerando vetores de ataque emergentes como o uso de IA em <em>phishing</em> e os futuros desafios da computação quântica.</p>
                 </div>
                 <div>
                     <h3 class="sub-section-title">Importância Estratégica</h3>
@@ -111,78 +109,150 @@
         <section id="estado-portugal" class="py-12 card">
             <h2 class="section-title">Estado da Transposição em Portugal</h2>
             <p class="text-gray-700 mb-6">
-                Portugal, tal como outros Estados-Membros, não cumpriu o prazo inicial de transposição da NIS2 (17 de outubro de 2024). Esta secção explora o processo legislativo nacional, a cronologia revista e o papel do Centro Nacional de Cibersegurança (CNCS).
+                Portugal transpôs a Diretiva NIS2 através do <span class="highlight-text">Decreto-Lei n.º 125/2025</span>, publicado no Diário da República n.º 234/2025, Série I, de 4 de dezembro de 2025. Este diploma aprova o novo Regime Jurídico da Cibersegurança (RJC), substituindo a Lei n.º 46/2018 (Regime Jurídico da Segurança do Ciberespaço) e o Decreto-Lei n.º 65/2021.
             </p>
             <h3 class="sub-section-title">Cronologia dos Marcos de Implementação</h3>
             <div class="timeline">
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
+                    <div class="timeline-dot completed"></div>
                     <div class="timeline-date">14 Dezembro 2022</div>
                     <div class="timeline-content-container">
-                        <h4 class="font-semibold text-sky-700">NIS2 Entra em Vigor (UE)</h4>
-                        <p class="text-sm text-gray-600">A diretiva entrou em vigor na legislação da UE. (Concluído)</p>
+                        <h4 class="font-semibold text-sky-700">NIS2 Entra em Vigor (UE) <span class="status-badge badge-completed">Concluído</span></h4>
+                        <p class="text-sm text-gray-600">A Diretiva (UE) 2022/2555 entrou em vigor na legislação da UE.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
+                    <div class="timeline-dot completed"></div>
                     <div class="timeline-date">17 Outubro 2024</div>
                     <div class="timeline-content-container">
-                        <h4 class="font-semibold text-sky-700">Prazo Original de Transposição</h4>
-                        <p class="text-sm text-gray-600">Portugal não cumpriu este prazo.</p>
+                        <h4 class="font-semibold text-sky-700">Prazo Original de Transposição <span class="status-badge badge-completed">Não Cumprido</span></h4>
+                        <p class="text-sm text-gray-600">Portugal não cumpriu o prazo de transposição da diretiva.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
+                    <div class="timeline-dot completed"></div>
+                    <div class="timeline-date">Nov 2024 — Jan 2025</div>
+                    <div class="timeline-content-container">
+                        <h4 class="font-semibold text-sky-700">Consulta Pública do RJC <span class="status-badge badge-completed">Concluído</span></h4>
+                        <p class="text-sm text-gray-600">Período de consulta pública sobre o projeto do novo Regime Jurídico da Cibersegurança (22 Nov — 31 Dez 2024).</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot completed"></div>
                     <div class="timeline-date">7 Maio 2025</div>
                     <div class="timeline-content-container">
-                        <h4 class="font-semibold text-sky-700">Parecer Fundamentado da CE</h4>
-                        <p class="text-sm text-gray-600">Comissão Europeia envia parecer a Portugal devido à falha na notificação da transposição.</p>
-                    </div>
-                </div>
-                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">Q3 2025 (Previsto)</div>
-                    <div class="timeline-content-container">
-                        <h4 class="font-semibold text-sky-700">Aprovação pelo Conselho de Ministros</h4>
-                        <p class="text-sm text-gray-600">Prevista aprovação do Regime Jurídico da Cibersegurança (RJC).</p>
+                        <h4 class="font-semibold text-sky-700">Parecer Fundamentado da CE <span class="status-badge badge-completed">Concluído</span></h4>
+                        <p class="text-sm text-gray-600">Comissão Europeia enviou parecer a Portugal devido à falha na notificação da transposição.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">Dezembro 2025 (Previsto)</div>
+                    <div class="timeline-dot completed"></div>
+                    <div class="timeline-date">22 Outubro 2025</div>
                     <div class="timeline-content-container">
-                        <h4 class="font-semibold text-sky-700">Publicação em Diário da República</h4>
-                        <p class="text-sm text-gray-600">Prevista publicação oficial do RJC.</p>
+                        <h4 class="font-semibold text-sky-700">Autorização Legislativa <span class="status-badge badge-completed">Concluído</span></h4>
+                        <p class="text-sm text-gray-600">Publicação da Lei n.º 59/2025, que concede autorização legislativa ao Governo para transpor a NIS2.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">1 Março 2026 (Previsto)</div>
+                    <div class="timeline-dot completed"></div>
+                    <div class="timeline-date">4 Dezembro 2025</div>
                     <div class="timeline-content-container">
-                        <h4 class="font-semibold text-sky-700">Entrada em Vigor da Lei</h4>
-                        <p class="text-sm text-gray-600">O RJC deverá entrar em vigor em Portugal.</p>
+                        <h4 class="font-semibold text-sky-700">Publicação do Decreto-Lei n.º 125/2025 <span class="status-badge badge-completed">Concluído</span></h4>
+                        <p class="text-sm text-gray-600">Publicado no Diário da República o novo Regime Jurídico da Cibersegurança, transpondo a Diretiva NIS2.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">1 Setembro 2026 (Previsto)</div>
+                    <div class="timeline-dot current"></div>
+                    <div class="timeline-date">Até 22 Abril 2026</div>
                     <div class="timeline-content-container">
-                        <h4 class="font-semibold text-sky-700">Início das Primeiras Auditorias</h4>
-                        <p class="text-sm text-gray-600">Programado o início das auditorias de conformidade.</p>
+                        <h4 class="font-semibold text-amber-700">Consulta Pública do Regulamento <span class="status-badge badge-current">Em Curso</span></h4>
+                        <p class="text-sm text-gray-600">Consulta pública do projeto de regulamento do RJC, aberta pelo CNCS por 30 dias úteis. Contributos via <strong>cncs@cncs.gov.pt</strong>.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot upcoming"></div>
+                    <div class="timeline-date">3 Abril 2026</div>
+                    <div class="timeline-content-container">
+                        <h4 class="font-semibold text-sky-700">Entrada em Vigor do RJC <span class="status-badge badge-upcoming">Próximo</span></h4>
+                        <p class="text-sm text-gray-600">O novo regime entra em vigor 120 dias após a publicação. Todas as obrigações previstas tornam-se aplicáveis.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot upcoming"></div>
+                    <div class="timeline-date">~4 Maio 2026</div>
+                    <div class="timeline-content-container">
+                        <h4 class="font-semibold text-sky-700">Prazo: Responsável de Cibersegurança <span class="status-badge badge-upcoming">Próximo</span></h4>
+                        <p class="text-sm text-gray-600">20 dias úteis após a entrada em vigor: designação e notificação ao CNCS do Responsável de Cibersegurança e do Ponto de Contacto Permanente (24/7).</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot upcoming"></div>
+                    <div class="timeline-date">60 dias após plataforma</div>
+                    <div class="timeline-content-container">
+                        <h4 class="font-semibold text-sky-700">Registo na Plataforma do CNCS <span class="status-badge badge-upcoming">Próximo</span></h4>
+                        <p class="text-sm text-gray-600">Entidades já em atividade devem identificar-se na plataforma eletrónica do CNCS no prazo de 60 dias após a sua disponibilização.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot upcoming"></div>
+                    <div class="timeline-date">~Abril 2027</div>
+                    <div class="timeline-content-container">
+                        <h4 class="font-semibold text-sky-700">Fim do Período de Carência de Coimas <span class="status-badge badge-upcoming">Futuro</span></h4>
+                        <p class="text-sm text-gray-600">12 meses após a entrada em vigor: termina o período de dispensa de coimas para entidades com procedimento interno de adaptação. Aplica-se plenamente o regime sancionatório.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot upcoming"></div>
+                    <div class="timeline-date">24 meses após regulamentação</div>
+                    <div class="timeline-content-container">
+                        <h4 class="font-semibold text-sky-700">Adoção Plena das Medidas <span class="status-badge badge-upcoming">Futuro</span></h4>
+                        <p class="text-sm text-gray-600">Prazo máximo para as entidades implementarem plenamente as medidas de cibersegurança previstas na regulamentação específica do CNCS.</p>
                     </div>
                 </div>
             </div>
             <div class="mt-6">
-                <h3 class="sub-section-title">Processo Legislativo e CNCS</h3>
-                <p class="text-gray-600 mb-3">Portugal está a transpor a NIS2 através do Regime Jurídico da Cibersegurança (RJC), que substituirá a Lei da Cibersegurança (Lei 46/2018) e incorporará elementos da Diretiva CER. Uma consulta pública decorreu entre novembro de 2024 e janeiro de 2025, resultando em ajustamentos como a extensão de prazos e clarificação de funções.</p>
-                <p class="text-gray-600">O <span class="highlight-text">Centro Nacional de Cibersegurança (CNCS)</span> é o ponto de contacto único e autoridade competente, disponibilizando informações e formulários no seu website.</p>
+                <h3 class="sub-section-title">Quadro Institucional Reforçado</h3>
+                <p class="text-gray-600 mb-3">O Decreto-Lei n.º 125/2025 reforça o quadro institucional da cibersegurança em Portugal, passando a integrar (artigo 15.º):</p>
+                <div class="grid md:grid-cols-3 gap-4 mt-4">
+                    <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
+                        <h4 class="font-semibold text-sky-700 mb-2">CNCS</h4>
+                        <p class="text-sm text-gray-600">Autoridade nacional de cibersegurança, ponto de contacto único (UE), autoridade de certificação e integração da equipa CSIRT nacional.</p>
+                    </div>
+                    <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
+                        <h4 class="font-semibold text-sky-700 mb-2">CSSC</h4>
+                        <p class="text-sm text-gray-600">Conselho Superior de Segurança do Ciberespaço — órgão consultivo do Primeiro-Ministro na área da cibersegurança.</p>
+                    </div>
+                    <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
+                        <h4 class="font-semibold text-sky-700 mb-2">SG-SSI</h4>
+                        <p class="text-sm text-gray-600">Secretário-Geral do Sistema de Segurança Interna — autoridade nacional de gestão de crises e incidentes de cibersegurança em grande escala.</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 mt-4">O diploma estabelece ainda autoridades de supervisão <strong>setoriais</strong> (ex: GNS, ANACOM, BdP, CMVM, ERS) e <strong>especiais</strong>, que exercem supervisão sobre setores específicos da economia.</p>
+            </div>
+            <div class="mt-6">
+                <h3 class="sub-section-title">Instrumentos Estratégicos</h3>
+                <p class="text-gray-600 mb-3">O novo regime assenta em três instrumentos fundamentais:</p>
+                <div class="grid md:grid-cols-3 gap-4 mt-4">
+                    <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                        <h4 class="font-semibold text-green-700 mb-2">Estratégia Nacional</h4>
+                        <p class="text-sm text-gray-600">Estratégia Nacional de Segurança do Ciberespaço — prioridades e objetivos estratégicos nacionais.</p>
+                    </div>
+                    <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                        <h4 class="font-semibold text-green-700 mb-2">Plano de Resposta</h4>
+                        <p class="text-sm text-gray-600">Plano Nacional de Resposta a Crises e Incidentes de Cibersegurança em grande escala.</p>
+                    </div>
+                    <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                        <h4 class="font-semibold text-green-700 mb-2">QNRCS</h4>
+                        <p class="text-sm text-gray-600">Quadro Nacional de Referência para a Cibersegurança — normas, padrões e boas práticas.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="quem-afetado" class="py-12 card">
             <h2 class="section-title">Quem é Afetado?</h2>
             <p class="text-gray-700 mb-6">
-                A NIS2 expande drasticamente o número de entidades reguladas em Portugal, de cerca de 1.000 para uma estimativa entre 7.000 e 9.000. Esta secção ajuda a perceber quem são estas entidades, os critérios de classificação e os setores abrangidos. Inclui uma ferramenta de autoavaliação indicativa.
+                O Decreto-Lei n.º 125/2025 expande significativamente o número de entidades reguladas em Portugal. O regime abrange entidades classificadas como <strong>Essenciais</strong>, <strong>Importantes</strong> e <strong>Entidades Públicas Relevantes</strong> — esta última sendo uma categoria específica da transposição portuguesa. Inclui uma parte significativa da Administração Pública.
             </p>
             <div class="grid md:grid-cols-2 gap-8">
                 <div>
@@ -190,56 +260,61 @@
                     <div class="chart-container my-4 h-64 md:h-80">
                         <canvas id="scopeExpansionChart"></canvas>
                     </div>
-                    <p class="text-gray-600 mt-4">Esta expansão inclui fabricantes de média dimensão e municípios com mais de 50.000 habitantes, representando uma mudança fundamental no panorama regulatório.</p>
+                    <p class="text-gray-600 mt-4">O regime abrange agora também a Administração Direta e Indireta do Estado, Administração Autónoma, Entidades Administrativas Independentes, Tribunais, Instituições de Ensino Superior, entre outros. São excluídas entidades nos domínios da Segurança Nacional, Defesa e Serviços de Informações.</p>
                 </div>
                 <div>
-                    <h3 class="sub-section-title">Critérios de Classificação</h3>
-                    <p class="text-gray-600 mb-2"><span class="font-semibold text-sky-700">Entidades Essenciais (EE):</span> Grandes empresas em setores críticos.</p>
+                    <h3 class="sub-section-title">Classificação de Entidades</h3>
+                    <p class="text-gray-600 mb-2"><span class="font-semibold text-sky-700">Entidades Essenciais (EE):</span> Grandes empresas em setores de elevada criticidade (Anexo I).</p>
                     <ul class="list-disc list-inside text-gray-600 mb-4 ml-4">
                         <li>Pelo menos 250 trabalhadores, OU</li>
                         <li>Volume de negócios anual > €50 milhões, OU</li>
                         <li>Balanço anual > €43 milhões.</li>
                     </ul>
-                    <p class="text-gray-600 mb-2"><span class="font-semibold text-sky-700">Entidades Importantes (EI):</span> Médias empresas em setores de elevada criticidade não classificadas como EE.</p>
+                    <p class="text-gray-600 mb-2"><span class="font-semibold text-sky-700">Entidades Importantes (EI):</span> Médias empresas em setores críticos não classificadas como EE.</p>
                     <ul class="list-disc list-inside text-gray-600 mb-4 ml-4">
                         <li>Pelo menos 50 trabalhadores, OU</li>
                         <li>Volume de negócios anual ≥ €10 milhões, OU</li>
                         <li>Balanço anual ≥ €10 milhões.</li>
                     </ul>
-                    <p class="text-gray-600">Certas entidades (telecomunicações, cloud, DNS, serviços de confiança) são reguladas independentemente do tamanho.</p>
+                    <p class="text-gray-600 mb-2"><span class="font-semibold text-sky-700">Entidades Públicas Relevantes (EPR):</span> Nova categoria portuguesa.</p>
+                    <ul class="list-disc list-inside text-gray-600 mb-4 ml-4">
+                        <li><strong>Grupo A:</strong> ≥ 250 trabalhadores (coimas até €4.000.000)</li>
+                        <li><strong>Grupo B:</strong> 75 a 249 trabalhadores (coimas até €350.000)</li>
+                    </ul>
+                    <p class="text-gray-600">Certas entidades (telecomunicações, cloud, DNS, serviços de confiança) são reguladas independentemente do tamanho. O CNCS pode designar entidades adicionais com decisão fundamentada.</p>
                 </div>
             </div>
 
             <div class="mt-8">
                 <h3 class="sub-section-title">Ferramenta de Autoavaliação Indicativa</h3>
-                <p class="text-gray-600 mb-4">Responda às seguintes perguntas para uma indicação da possível classificação da sua entidade. <span class="font-semibold">Nota:</span> Esta é uma ferramenta simplificada. Consulte sempre o CNCS e aconselhamento jurídico para uma determinação oficial.</p>
+                <p class="text-gray-600 mb-4">Responda às seguintes perguntas para uma indicação da possível classificação da sua entidade. <span class="font-semibold">Nota:</span> Esta é uma ferramenta simplificada. Consulte sempre o CNCS e aconselhamento jurídico para uma determinação oficial. As entidades devem autoidentificar-se na plataforma eletrónica do CNCS (quando disponível).</p>
                 <div class="bg-orange-50 p-6 rounded-lg shadow">
                     <div class="mb-4">
                         <label for="sector" class="block text-sm font-medium text-gray-700 mb-1">Selecione o setor principal da sua entidade:</label>
                         <select id="sector" name="sector" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                             <option value="">-- Selecione um setor --</option>
-                            <optgroup label="Potencialmente Essencial (Anexo I)">
-                                <option value="energia">Energia (eletricidade, gás, petróleo, hidrogénio)</option>
+                            <optgroup label="Setores de Elevada Criticidade (Anexo I)">
+                                <option value="energia">Energia (eletricidade, gás, petróleo, hidrogénio, aquecimento/arrefecimento urbano)</option>
                                 <option value="transportes">Transportes (aéreo, ferroviário, marítimo, rodoviário)</option>
-                                <option value="banca">Banca</option>
+                                <option value="banca">Banca (instituições de crédito)</option>
                                 <option value="mercado_financeiro">Infraestruturas do Mercado Financeiro</option>
-                                <option value="saude">Saúde (hospitais, fabricantes de medicamentos)</option>
+                                <option value="saude">Saúde (hospitais, fabricantes de medicamentos, dispositivos médicos)</option>
                                 <option value="agua_potavel">Abastecimento e Distribuição de Água Potável</option>
                                 <option value="aguas_residuais">Gestão de Águas Residuais</option>
-                                <option value="infra_digital_critica">Infraestruturas Digitais Críticas (DNS, TLD, Cloud, Data Center, Redes de Confiança, Telecomunicações)</option>
-                                <option value="gestao_tic_b2b">Gestão de Serviços TIC (B2B)</option>
+                                <option value="infra_digital_critica">Infraestruturas Digitais (DNS, TLD, Cloud, Data Center, CDN, Serviços de Confiança, Telecomunicações)</option>
+                                <option value="gestao_tic_b2b">Gestão de Serviços TIC (B2B - MSP/MSSP)</option>
                                 <option value="admin_publica_central">Administração Pública (Central)</option>
                                 <option value="espaco">Espaço</option>
                             </optgroup>
-                            <optgroup label="Potencialmente Importante (Anexo II)">
+                            <optgroup label="Outros Setores Críticos (Anexo II)">
                                 <option value="servicos_postais">Serviços Postais e de Correio</option>
                                 <option value="gestao_residuos">Gestão de Resíduos</option>
                                 <option value="quimicos">Produção, Fabrico e Distribuição de Produtos Químicos</option>
                                 <option value="alimentar">Produção, Processamento e Distribuição de Produtos Alimentares</option>
-                                <option value="industria_transformadora">Indústria Transformadora (equip. médicos, eletrónica, etc.)</option>
+                                <option value="industria_transformadora">Indústria Transformadora (equip. médicos, eletrónica, veículos, etc.)</option>
                                 <option value="fornecedores_digitais_gerais">Fornecedores de Serviços Digitais (plataformas online, motores busca, redes sociais)</option>
                                 <option value="investigacao">Investigação</option>
-                                <option value="admin_publica_local">Administração Pública (Local/Regional com ≥50.000 habitantes)</option>
+                                <option value="admin_publica_local">Administração Pública (Local/Regional)</option>
                             </optgroup>
                         </select>
                     </div>
@@ -251,7 +326,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">Volume de negócios anual (em milhões de €):</label>
                         <input type="number" id="turnover" name="turnover" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" placeholder="Ex: 25">
                     </div>
-                     <div class="mb-4">
+                    <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Balanço total anual (em milhões de €):</label>
                         <input type="number" id="balance" name="balance" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" placeholder="Ex: 20">
                     </div>
@@ -259,48 +334,86 @@
                     <div id="assessmentResult" class="mt-4 p-3 bg-sky-100 text-sky-800 rounded-md hidden"></div>
                 </div>
             </div>
-             <p class="text-gray-600 mt-6">As entidades devem autoidentificar-se e registar-se no CNCS. Uma ferramenta oficial de autoavaliação será disponibilizada pelo CNCS.</p>
+            <p class="text-gray-600 mt-6">As entidades devem autoidentificar-se na plataforma eletrónica do CNCS no prazo de 60 dias após a sua disponibilização (entidades já em atividade) ou 30 dias após o início de atividade (novas entidades). A informação deve ser atualizada a cada dois anos.</p>
         </section>
 
         <section id="requisitos" class="py-12 card">
             <h2 class="section-title">Requisitos Essenciais e Obrigações</h2>
             <p class="text-gray-700 mb-6">
-                A NIS2 introduz um conjunto de medidas mínimas de segurança e obrigações de notificação de incidentes. Esta secção detalha esses requisitos, que se baseiam numa "abordagem de todos os riscos".
+                O Decreto-Lei n.º 125/2025 impõe medidas técnicas, operacionais e organizacionais proporcionais, baseadas numa "abordagem de todos os riscos". Introduz também a figura obrigatória do <span class="highlight-text">Responsável de Cibersegurança</span> e do <span class="highlight-text">Ponto de Contacto Permanente</span> (24/7).
             </p>
+
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-200 mb-6">
+                <h4 class="font-semibold text-blue-700 mb-2">Responsável de Cibersegurança (Art. 31.º)</h4>
+                <p class="text-sm text-gray-600 mb-2">Obrigatório para entidades EE e EI. Deve ser membro do órgão de gestão ou diretamente subordinado. Funções:</p>
+                <p class="text-sm text-gray-600">Propor medidas de gestão de riscos (incluindo cadeia de abastecimento) • Informar os órgãos responsáveis • Apoiar a implementação de medidas de supervisão • Promover cultura de cibersegurança e propor formação.</p>
+                <p class="text-sm text-gray-600 mt-2"><strong>Prazo:</strong> 20 dias úteis após a entrada em vigor (até ~4 de maio de 2026).</p>
+            </div>
+
             <h3 class="sub-section-title">Medidas Mínimas de Segurança</h3>
-            <p class="text-gray-600 mb-4">As entidades devem implementar, no mínimo, as seguintes medidas:</p>
+            <p class="text-gray-600 mb-4">As entidades devem implementar, no mínimo, as seguintes medidas (Art. 26.º — proporcional ao tipo e dimensão da entidade):</p>
             <div id="securityMeasuresAccordion" class="space-y-2">
-                </div>
+            </div>
 
             <h3 class="sub-section-title mt-8">Obrigações de Notificação de Incidentes Significativos</h3>
-            <p class="text-gray-600 mb-4">Qualquer incidente considerado *significativo* deve ser notificado ao CNCS/CSIRT nacional.</p>
+            <p class="text-gray-600 mb-4">Qualquer incidente considerado <em>significativo</em> deve ser notificado ao CNCS/CSIRT nacional. As entidades devem também informar os destinatários dos seus serviços em caso de risco elevado.</p>
             <div class="chart-container my-4 h-48 md:h-64">
                 <canvas id="notificationTimelineChart"></canvas>
             </div>
-            <p class="text-gray-600 mt-2">Um incidente é "significativo" com base no número de utilizadores afetados, duração, gravidade da interrupção e extensão do impacto. A notificação não aumenta a responsabilidade da entidade.</p>
+            <p class="text-gray-600 mt-2">Um incidente é "significativo" se causar perturbações graves nos serviços, perdas financeiras relevantes, ou afetar outras pessoas singulares ou colectivas. Se afetar dois ou mais Estados-Membros, o CNCS deve informar os outros Estados afetados e a ENISA.</p>
+
+            <div class="mt-6 bg-purple-50 p-4 rounded-lg border border-purple-200">
+                <h4 class="font-semibold text-purple-700 mb-2">Divulgação Coordenada de Vulnerabilidades (CVD)</h4>
+                <p class="text-sm text-gray-600">O DL 125/2025 introduz o enquadramento legal para a Divulgação Coordenada de Vulnerabilidades. A identificação de vulnerabilidades para fins de segurança é despenalizada, desde que feita sob condições estritas e com comunicação imediata à autoridade competente (Art. 84.º).</p>
+            </div>
+
+            <div class="mt-6">
+                <h3 class="sub-section-title">Supervisão Diferenciada</h3>
+                <p class="text-gray-600">O regime distingue a supervisão consoante o tipo de entidade:</p>
+                <div class="grid md:grid-cols-2 gap-4 mt-4">
+                    <div class="p-4 bg-red-50 rounded-lg border border-red-200">
+                        <h4 class="font-semibold text-red-700">Entidades Essenciais</h4>
+                        <p class="text-sm text-gray-600">Supervisão <strong>ex ante</strong> e <strong>ex post</strong> — podem ser supervisionadas antes ou depois de um incidente.</p>
+                    </div>
+                    <div class="p-4 bg-amber-50 rounded-lg border border-amber-200">
+                        <h4 class="font-semibold text-amber-700">Entidades Importantes e EPR</h4>
+                        <p class="text-sm text-gray-600">Supervisão <strong>ex post</strong> — supervisão apenas depois de um incidente ou evidência de incumprimento.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="sancoes" class="py-12 card">
             <h2 class="section-title">Responsabilidade da Gestão e Sanções</h2>
             <p class="text-gray-700 mb-6">
-                Um dos maiores impactos da NIS2 é a responsabilização direta dos órgãos de gestão pela cibersegurança. A diretiva também estabelece um regime sancionatório rigoroso.
+                O Decreto-Lei n.º 125/2025 estabelece um duplo nível de responsabilização: a entidade enquanto pessoa coletiva <strong>e</strong> os titulares dos seus órgãos de gestão, direção e administração a título pessoal (por dolo ou culpa grave).
             </p>
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
                     <h3 class="sub-section-title">Responsabilidade da Gestão</h3>
-                    <p class="text-gray-600 mb-3">Os órgãos de gestão são responsáveis por aprovar e supervisionar os programas de cibersegurança. Devem promover formação obrigatória para si e para os colaboradores. Em caso de negligência grave, podem enfrentar responsabilização pessoal, incluindo proibições temporárias de cargos.</p>
-                    <p class="text-gray-600">Esta mudança eleva a cibersegurança a uma prioridade estratégica ao nível do conselho de administração.</p>
+                    <p class="text-gray-600 mb-3">Os órgãos de gestão das EE e EI têm obrigações reforçadas de aprovação e supervisão das medidas de cibersegurança, incluindo formação regular. Em caso de negligência grave, podem enfrentar:</p>
+                    <ul class="list-disc list-inside text-gray-600 mb-4 ml-4">
+                        <li>Responsabilização pessoal por ação ou omissão</li>
+                        <li>Interdição temporária do exercício de funções</li>
+                        <li>Coimas pessoais (até €16.000 para pessoas singulares em EPR)</li>
+                    </ul>
+                    <p class="text-gray-600">A cibersegurança passa a ser uma responsabilidade direta dos órgãos de gestão, não apenas da equipa técnica.</p>
                 </div>
                 <div>
                     <h3 class="sub-section-title">Regime Sancionatório</h3>
-                    <p class="text-gray-600 mb-4">Selecione o tipo de entidade para ver as coimas máximas aplicáveis:</p>
-                    <div class="mb-4">
+                    <p class="text-gray-600 mb-4">Selecione o tipo de entidade para ver as coimas aplicáveis:</p>
+                    <div class="mb-4 flex flex-wrap gap-2">
                         <button class="tab-button active" data-type="ee">Entidades Essenciais</button>
                         <button class="tab-button" data-type="ei">Entidades Importantes</button>
+                        <button class="tab-button" data-type="epr_a">EPR Grupo A</button>
+                        <button class="tab-button" data-type="epr_b">EPR Grupo B</button>
                     </div>
                     <div id="sanctionsContent">
-                        </div>
-                     <p class="text-gray-600 mt-4">Outras sanções não monetárias incluem suspensão de licenças, inibição de diretores (EE), penalidades periódicas, nomeação pública (EI) e ordens corretivas. A interdição de órgãos de gestão só ocorre como sanção acessória.</p>
+                    </div>
+                    <div class="mt-4 bg-yellow-50 p-3 rounded-lg border border-yellow-200">
+                        <p class="text-sm text-yellow-800"><strong>Período de carência:</strong> Nos primeiros 12 meses após a entrada em vigor, as entidades que demonstrem um procedimento interno de adaptação podem beneficiar de dispensa de coimas.</p>
+                    </div>
+                    <p class="text-gray-600 mt-4"><strong>Sanções acessórias incluem:</strong> publicitação da decisão em Diário da República e jornal de circulação nacional, proibição de participação em contratação pública, suspensão da prestação do serviço, e adoção obrigatória de plano de formação em cibersegurança (6 meses para execução).</p>
                 </div>
             </div>
         </section>
@@ -308,29 +421,30 @@
         <section id="desafios-oportunidades" class="py-12 card">
             <h2 class="section-title">Desafios e Oportunidades</h2>
             <p class="text-gray-700 mb-6">
-                A implementação da NIS2 traz consigo desafios significativos, especialmente para PMEs, mas também abre portas para oportunidades estratégicas importantes para as organizações portuguesas.
+                A implementação do Decreto-Lei n.º 125/2025 traz consigo desafios significativos, especialmente para PMEs e Administração Pública, mas também abre portas para oportunidades estratégicas importantes.
             </p>
             <div class="grid md:grid-cols-2 gap-8">
                 <div>
                     <h3 class="sub-section-title">Principais Desafios</h3>
                     <ul class="list-disc list-inside text-gray-600 space-y-2">
-                        <li><span class="font-semibold">Alocação de Recursos:</span> Custos com tecnologia, auditorias, formação. Baixa maturidade em segurança de muitas empresas.</li>
-                        <li><span class="font-semibold">Escassez de Talento:</span> Falta de especialistas em cibersegurança, especialmente para setores recém-incluídos.</li>
-                        <li><span class="font-semibold">Risco da Cadeia de Abastecimento:</span> Falta de visibilidade e capacidade para gerir a segurança de fornecedores.</li>
-                        <li><span class="font-semibold">Mudança Cultural:</span> Transformar a cibersegurança numa estratégia integrada e preventiva, não apenas tarefa de TI.</li>
-                        <li><span class="font-semibold">Identificação de Ativos Críticos:</span> Necessidade de avaliações de risco.</li>
-                        <li><span class="font-semibold">Manter-se Atualizado:</span> A NIS2 evolui com as melhores práticas.</li>
-                        <li><span class="font-semibold">Maturidade na Gestão de Incidentes:</span> Dificuldade em cumprir prazos de notificação de 24h.</li>
+                        <li><span class="font-semibold">Alocação de Recursos:</span> Custos com tecnologia, auditorias, formação. Baixa maturidade em segurança de muitas entidades, especialmente na Administração Pública.</li>
+                        <li><span class="font-semibold">Escassez de Talento:</span> Falta de especialistas em cibersegurança, especialmente para a função obrigatória de Responsável de Cibersegurança.</li>
+                        <li><span class="font-semibold">Risco da Cadeia de Abastecimento:</span> Necessidade de adaptar contratos com fornecedores críticos e prestadores de serviços geridos.</li>
+                        <li><span class="font-semibold">Mudança Cultural:</span> Transformar a cibersegurança de tarefa de TI em responsabilidade de gestão de topo.</li>
+                        <li><span class="font-semibold">Dependência da Regulamentação:</span> Muitas obrigações detalhadas dependem de regulamentação que o CNCS ainda está a produzir.</li>
+                        <li><span class="font-semibold">Maturidade na Gestão de Incidentes:</span> Dificuldade em cumprir prazos de notificação de 24h (alerta precoce).</li>
+                        <li><span class="font-semibold">Administração Pública:</span> Grande heterogeneidade de maturidade digital entre entidades públicas.</li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="sub-section-title">Oportunidades Estratégicas</h3>
-                     <ul class="list-disc list-inside text-gray-600 space-y-2">
-                        <li><span class="font-semibold">Competitividade e Resiliência:</span> Melhorar postura de cibersegurança, construir confiança, mitigar danos.</li>
-                        <li><span class="font-semibold">Avanço da Maturidade Digital:</span> Impulsionar Portugal para um futuro digital mais seguro.</li>
-                        <li><span class="font-semibold">Diferenciador Competitivo:</span> Ganhar credibilidade junto de parceiros e clientes.</li>
-                        <li><span class="font-semibold">Estratégia Preventiva Integrada:</span> Ir além da mera conformidade.</li>
-                        <li><span class="font-semibold">Fortalecimento da Segurança Geral:</span> Transformar conformidade em oportunidade.</li>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li><span class="font-semibold">Competitividade e Resiliência:</span> Melhorar postura de cibersegurança, construir confiança, mitigar danos financeiros e reputacionais.</li>
+                        <li><span class="font-semibold">Avanço da Maturidade Digital:</span> Impulsionar Portugal para um futuro digital mais seguro e alinhado com padrões europeus.</li>
+                        <li><span class="font-semibold">Diferenciador Competitivo:</span> Demonstrar conformidade como credencial de confiança junto de parceiros e clientes europeus.</li>
+                        <li><span class="font-semibold">Roteiro NIS2 do CNCS:</span> Programa de 60 ações de formação gratuitas pelo país para preparar entidades.</li>
+                        <li><span class="font-semibold">Despenalização da Pesquisa de Vulnerabilidades:</span> Novo enquadramento legal que promove a segurança ofensiva responsável.</li>
+                        <li><span class="font-semibold">Alinhamento com RGPD e DORA:</span> Oportunidade de consolidar frameworks de compliance e criar sinergias.</li>
                     </ul>
                 </div>
             </div>
@@ -339,45 +453,54 @@
         <section id="proximos-passos" class="py-12 card">
             <h2 class="section-title">Recomendações e Próximos Passos</h2>
             <p class="text-gray-700 mb-6">
-                Dada a transposição em curso e os prazos, é crucial que as organizações portuguesas adotem uma abordagem proativa. Esta secção oferece recomendações para iniciar a jornada de conformidade com a NIS2.
+                Com a entrada em vigor a 3 de abril de 2026, é essencial que as organizações atuem agora. Segue-se um roteiro prático com base no Decreto-Lei n.º 125/2025.
             </p>
             <div class="space-y-4">
-                <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
-                    <h4 class="font-semibold text-sky-700 text-lg mb-1">1. Confirme o seu Estatuto</h4>
-                    <p class="text-gray-600">Utilize a ferramenta de autoavaliação do CNCS (quando disponível) e procure aconselhamento para determinar se a sua entidade é Essencial (EE) ou Importante (EI).</p>
+                <div class="p-4 bg-red-50 rounded-lg border border-red-200">
+                    <h4 class="font-semibold text-red-700 text-lg mb-1">🔴 URGENTE — Antes de 3 de Abril de 2026</h4>
+                    <p class="text-gray-600">Determine se a sua entidade é Essencial, Importante ou Entidade Pública Relevante. Identifique o enquadramento regulatório aplicável com base nos Anexos I e II do decreto-lei.</p>
+                </div>
+                <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                    <h4 class="font-semibold text-orange-700 text-lg mb-1">🟠 Até ~4 de Maio de 2026 (20 dias úteis após entrada em vigor)</h4>
+                    <p class="text-gray-600">Designe e notifique ao CNCS o <strong>Responsável de Cibersegurança</strong> (membro ou reportando diretamente ao órgão de gestão) e o <strong>Ponto de Contacto Permanente</strong> (disponível 24/7).</p>
+                </div>
+                <div class="p-4 bg-amber-50 rounded-lg border border-amber-200">
+                    <h4 class="font-semibold text-amber-700 text-lg mb-1">🟡 Quando a Plataforma Estiver Disponível (60 dias)</h4>
+                    <p class="text-gray-600">Registe-se na plataforma eletrónica do CNCS com NIF, CAE, contactos e demais informação exigida. Entidades já em atividade dispõem de 60 dias; novas entidades, 30 dias.</p>
                 </div>
                 <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
-                    <h4 class="font-semibold text-sky-700 text-lg mb-1">2. Prepare os Dados para Registo</h4>
-                    <p class="text-gray-600">Reúna NIF, CAE, contactos cibernéticos para o registo obrigatório (previsto para Março de 2026).</p>
-                </div>
-                <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
-                    <h4 class="font-semibold text-sky-700 text-lg mb-1">3. Realize uma Análise de Lacunas (*Gap Analysis*)</h4>
-                    <p class="text-gray-600">Avalie a sua conformidade atual com os requisitos do Artigo 21 da NIS2 (medidas mínimas de segurança). Identifique e avalie riscos dos ativos críticos.</p>
+                    <h4 class="font-semibold text-sky-700 text-lg mb-1">3. Realize uma Análise de Lacunas (<em>Gap Analysis</em>)</h4>
+                    <p class="text-gray-600">Avalie a conformidade atual com as medidas mínimas de segurança previstas no Art. 26.º. Identifique lacunas face ao Quadro Nacional de Referência para a Cibersegurança.</p>
                 </div>
                 <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
                     <h4 class="font-semibold text-sky-700 text-lg mb-1">4. Elabore/Atualize Planos de Resposta a Incidentes</h4>
-                    <p class="text-gray-600">Desenvolva um plano robusto, alinhado com os prazos de notificação da NIS2 e GDPR. Teste-o regularmente.</p>
+                    <p class="text-gray-600">Desenvolva procedimentos alinhados com os prazos de notificação (24h/72h/1 mês) e a obrigação de informar os destinatários dos serviços. Teste regularmente.</p>
                 </div>
                 <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
                     <h4 class="font-semibold text-sky-700 text-lg mb-1">5. Envolva a Administração</h4>
-                    <p class="text-gray-600">Garanta a aprovação do programa de cibersegurança pela gestão de topo e agende auditorias anuais.</p>
-                </div>
-                 <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
-                    <h4 class="font-semibold text-sky-700 text-lg mb-1">6. Promova Formação e Sensibilização</h4>
-                    <p class="text-gray-600">Assegure que todos os colaboradores compreendem as suas responsabilidades. A formação deve ser contínua.</p>
+                    <p class="text-gray-600">Garanta aprovação do programa de cibersegurança pela gestão de topo. A responsabilidade pessoal dos administradores torna isto uma prioridade de governance.</p>
                 </div>
                 <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
-                    <h4 class="font-semibold text-sky-700 text-lg mb-1">7. Considere Apoio Externo</h4>
-                    <p class="text-gray-600">Se necessário, procure consultoria especializada para o ajudar na conformidade, especialmente se a maturidade em cibersegurança for baixa ou os recursos limitados.</p>
+                    <h4 class="font-semibold text-sky-700 text-lg mb-1">6. Reveja Contratos com Fornecedores</h4>
+                    <p class="text-gray-600">Adapte contratos com fornecedores críticos, prestadores de serviços geridos (MSP/MSSP), infraestruturas TIC e outros terceiros relevantes.</p>
+                </div>
+                <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
+                    <h4 class="font-semibold text-sky-700 text-lg mb-1">7. Promova Formação e Sensibilização</h4>
+                    <p class="text-gray-600">Formação obrigatória para órgãos de gestão e colaboradores. Aproveite o programa "Roteiro NIS2" do CNCS (60 ações gratuitas).</p>
+                </div>
+                <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
+                    <h4 class="font-semibold text-sky-700 text-lg mb-1">8. Acompanhe a Regulamentação</h4>
+                    <p class="text-gray-600">Monitorize as publicações do CNCS e autoridades setoriais sobre regulamentação complementar, plataforma eletrónica e requisitos técnicos específicos.</p>
                 </div>
             </div>
-            <p class="text-gray-700 mt-8 text-center font-semibold">Uma abordagem proativa não só reduz riscos e penalidades, mas também ajuda a incorporar uma cultura de resiliência na organização.</p>
+            <p class="text-gray-700 mt-8 text-center font-semibold">O período de 120 dias até à entrada em vigor e os 12 meses de carência de coimas constituem uma janela de oportunidade para estruturar o processo de adaptação.</p>
         </section>
     </main>
 
     <footer class="bg-sky-800 text-sky-100 py-8 text-center">
-        <p>&copy; <span id="currentYear"></span> Guia Interativo NIS2 Portugal. Conteúdo adaptado do relatório de análise.</p>
-        <p class="text-sm">Esta aplicação é para fins informativos e não constitui aconselhamento jurídico.</p>
+        <p>&copy; <span id="currentYear"></span> Guia Interativo NIS2 Portugal. Atualizado com base no Decreto-Lei n.º 125/2025.</p>
+        <p class="text-sm mt-1">Referência: <a href="https://diariodarepublica.pt/dr/detalhe/decreto-lei/125-2025-962603401" target="_blank" class="underline hover:text-white">DR n.º 234/2025</a> | <a href="https://www.cncs.gov.pt/pt/diretiva-nis-2/" target="_blank" class="underline hover:text-white">CNCS — Diretiva NIS 2</a></p>
+        <p class="text-sm mt-2">Esta aplicação é para fins informativos e não constitui aconselhamento jurídico.</p>
     </footer>
 
     <script>
@@ -399,7 +522,7 @@
                 }
             });
         });
-        
+
         window.addEventListener('scroll', () => {
             let current = '';
             const sections = document.querySelectorAll('main section');
@@ -409,7 +532,6 @@
                     current = section.getAttribute('id');
                 }
             });
-
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href').substring(1) === current) {
@@ -418,7 +540,7 @@
             });
         });
 
-
+        // Scope Expansion Chart
         const scopeExpansionCtx = document.getElementById('scopeExpansionChart').getContext('2d');
         new Chart(scopeExpansionCtx, {
             type: 'bar',
@@ -426,15 +548,15 @@
                 labels: ['Entidades Reguladas'],
                 datasets: [
                     {
-                        label: 'Antes da NIS2 (aprox.)',
+                        label: 'Antes (Lei 46/2018)',
                         data: [1000],
                         backgroundColor: 'rgba(251, 146, 60, 0.7)',
                         borderColor: 'rgba(251, 146, 60, 1)',
                         borderWidth: 1
                     },
                     {
-                        label: 'Com NIS2 (estimativa)',
-                        data: [8000], // Mid-point of 7000-9000
+                        label: 'Com DL 125/2025 (estimativa)',
+                        data: [8000],
                         backgroundColor: 'rgba(59, 130, 246, 0.7)',
                         borderColor: 'rgba(59, 130, 246, 1)',
                         borderWidth: 1
@@ -448,17 +570,13 @@
                     y: { beginAtZero: true, title: { display: true, text: 'Número de Entidades' } }
                 },
                 plugins: {
-                    title: { display: true, text: 'Aumento Estimado de Entidades Reguladas' },
+                    title: { display: true, text: 'Expansão do Âmbito — DL 125/2025 vs. Regime Anterior' },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
                                 let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null) {
-                                    label += context.parsed.y.toLocaleString('pt-PT');
-                                }
+                                if (label) label += ': ';
+                                if (context.parsed.y !== null) label += context.parsed.y.toLocaleString('pt-PT');
                                 return label;
                             }
                         }
@@ -467,6 +585,7 @@
             }
         });
 
+        // Self-assessment tool
         const assessButton = document.getElementById('assessButton');
         const assessmentResult = document.getElementById('assessmentResult');
         assessButton.addEventListener('click', () => {
@@ -475,43 +594,51 @@
             const turnover = parseFloat(document.getElementById('turnover').value) || 0;
             const balance = parseFloat(document.getElementById('balance').value) || 0;
             let resultText = "Com base nos dados fornecidos: ";
-            let classification = "Não foi possível determinar";
+            let classification = "";
 
             const essentialSectors = ["energia", "transportes", "banca", "mercado_financeiro", "saude", "agua_potavel", "aguas_residuais", "infra_digital_critica", "gestao_tic_b2b", "admin_publica_central", "espaco"];
             const importantSectors = ["servicos_postais", "gestao_residuos", "quimicos", "alimentar", "industria_transformadora", "fornecedores_digitais_gerais", "investigacao", "admin_publica_local"];
-            
-            const isEssentialBySize = employees >= 250 || turnover > 50 || balance > 43;
-            const isImportantBySize = (employees >= 50 && employees < 250) || (turnover >= 10 && turnover <= 50) || (balance >=10 && balance <=43);
 
+            const isLarge = employees >= 250 || turnover > 50 || balance > 43;
+            const isMedium = (employees >= 50 && employees < 250) || (turnover >= 10 && turnover <= 50) || (balance >= 10 && balance <= 43);
 
             if (!sector) {
                 resultText = "Por favor, selecione um setor.";
-            } else {
-                 if (essentialSectors.includes(sector)) {
-                    if (isEssentialBySize) {
-                        classification = "Potencialmente uma Entidade Essencial (EE).";
-                    } else if (isImportantBySize) {
-                         classification = "Potencialmente uma Entidade Importante (EI), mesmo estando num setor do Anexo I, devido ao tamanho.";
-                    } else {
-                        classification = "Poderá não ser diretamente abrangida pelos critérios de dimensão para EE ou EI, mas verifique exceções (ex: serviços de confiança, DNS, cloud são sempre abrangidos independentemente do tamanho se estiverem no setor 'Infraestruturas Digitais Críticas').";
-                    }
-                } else if (importantSectors.includes(sector)) {
-                     if (isEssentialBySize) { // A large entity in an Annex II sector could be considered Essential by national discretion or other factors
-                        classification = "Potencialmente uma Entidade Essencial (EE) devido ao tamanho, embora o setor seja do Anexo II. Verifique com o CNCS.";
-                    } else if (isImportantBySize) {
-                        classification = "Potencialmente uma Entidade Importante (EI).";
-                    } else {
-                        classification = "Poderá não ser diretamente abrangida pelos critérios de dimensão para EI.";
-                    }
+            } else if (sector === "admin_publica_central") {
+                if (isLarge) {
+                    classification = "Potencialmente uma Entidade Essencial (EE) ou Entidade Pública Relevante — Grupo A (≥250 trabalhadores).";
+                } else if (employees >= 75) {
+                    classification = "Potencialmente uma Entidade Pública Relevante — Grupo B (75-249 trabalhadores).";
                 } else {
-                    classification = "O setor selecionado não corresponde diretamente aos Anexos I ou II da NIS2 ou a ferramenta precisa de ser atualizada. Consulte o CNCS.";
+                    classification = "Poderá ser abrangida como Entidade Pública Relevante. Verifique com o CNCS o enquadramento específico.";
                 }
-                
-                if (sector === "infra_digital_critica" && (document.getElementById('sector').options[document.getElementById('sector').selectedIndex].text.toLowerCase().includes("dns") || document.getElementById('sector').options[document.getElementById('sector').selectedIndex].text.toLowerCase().includes("cloud") || document.getElementById('sector').options[document.getElementById('sector').selectedIndex].text.toLowerCase().includes("confiança"))) {
-                    classification += " Entidades como serviços DNS, cloud, e de confiança são geralmente consideradas Essenciais independentemente do tamanho.";
+                resultText += classification;
+            } else if (sector === "admin_publica_local") {
+                if (employees >= 250) {
+                    classification = "Potencialmente uma Entidade Pública Relevante — Grupo A (≥250 trabalhadores). Coimas até €4.000.000.";
+                } else if (employees >= 75) {
+                    classification = "Potencialmente uma Entidade Pública Relevante — Grupo B (75-249 trabalhadores). Coimas até €350.000.";
+                } else {
+                    classification = "Poderá não ser diretamente abrangida pelos critérios de dimensão para EPR. Verifique com o CNCS.";
                 }
-
-
+                resultText += classification;
+            } else if (essentialSectors.includes(sector)) {
+                if (isLarge) {
+                    classification = "Potencialmente uma Entidade Essencial (EE). Sujeita a supervisão ex ante e ex post. Coimas até €10.000.000 ou 2% do volume de negócios global.";
+                } else if (isMedium) {
+                    classification = "Potencialmente uma Entidade Importante (EI), mesmo estando num setor do Anexo I, devido à dimensão. Coimas até €7.000.000 ou 1,4% do volume de negócios.";
+                } else {
+                    classification = "Poderá não ser diretamente abrangida pelos critérios de dimensão. Exceção: DNS, cloud, serviços de confiança e telecomunicações são sempre abrangidos independentemente do tamanho.";
+                }
+                resultText += classification;
+            } else if (importantSectors.includes(sector)) {
+                if (isLarge) {
+                    classification = "Potencialmente uma Entidade Essencial (EE) pela dimensão, embora o setor seja do Anexo II. O CNCS pode determinar esta classificação. Verifique.";
+                } else if (isMedium) {
+                    classification = "Potencialmente uma Entidade Importante (EI). Coimas até €7.000.000 ou 1,4% do volume de negócios global.";
+                } else {
+                    classification = "Poderá não ser diretamente abrangida pelos critérios de dimensão para EI.";
+                }
                 resultText += classification;
             }
 
@@ -519,71 +646,69 @@
             assessmentResult.classList.remove('hidden');
         });
 
+        // Security Measures Accordion
         const securityMeasures = [
-            { title: "Gestão de Riscos e Políticas de Segurança", details: "Implementar políticas para minimizar probabilidade e impacto de ameaças." },
-            { title: "Tratamento de Incidentes", details: "Estabelecer procedimentos e planos de resposta a ameaças ativas." },
-            { title: "Continuidade de Negócios", details: "Planos de continuidade, gestão de backups, recuperação de desastres e gestão de crises." },
-            { title: "Segurança da Cadeia de Abastecimento", details: "Abordar relações com fornecedores diretos e prestadores de serviços." },
-            { title: "Segurança na Aquisição, Desenvolvimento e Manutenção", details: "Incluindo tratamento e divulgação de vulnerabilidades." },
-            { title: "Avaliação da Eficácia", details: "Políticas para avaliar a eficácia das medidas de gestão de riscos." },
-            { title: "Higiene Cibernética e Formação", details: "Práticas básicas e formação para gestão e colaboradores." },
-            { title: "Uso de Criptografia", details: "Políticas e procedimentos para uso de criptografia e encriptação." },
-            { title: "Segurança de Recursos Humanos e Controlo de Acessos", details: "Políticas de controlo de acessos e gestão de ativos." },
-            { title: "Autenticação Multifator (MFA) e Comunicações Seguras", details: "Uso de MFA/autenticação contínua, comunicações seguras e sistemas de emergência." }
+            { title: "Gestão de Riscos e Políticas de Segurança", details: "Implementar políticas para minimizar probabilidade e impacto de ameaças. Abordagem de todos os riscos, proporcional à dimensão e atividade da entidade." },
+            { title: "Tratamento de Incidentes", details: "Estabelecer procedimentos e planos de resposta, deteção, análise e contenção de ameaças ativas. Inclui notificação obrigatória ao CNCS/CSIRT." },
+            { title: "Continuidade de Negócios", details: "Planos de continuidade, gestão de backups, recuperação de desastres e gestão de crises. Integração com planos de proteção civil." },
+            { title: "Segurança da Cadeia de Abastecimento", details: "Abordar relações com fornecedores diretos e prestadores de serviços. Revisão de contratos com MSP/MSSP e fornecedores de infraestruturas TIC." },
+            { title: "Segurança na Aquisição, Desenvolvimento e Manutenção", details: "Incluindo tratamento e divulgação coordenada de vulnerabilidades (CVD), conforme o novo enquadramento legal." },
+            { title: "Avaliação da Eficácia", details: "Políticas e procedimentos para avaliar regularmente a eficácia das medidas de gestão de riscos de cibersegurança." },
+            { title: "Higiene Cibernética e Formação", details: "Práticas básicas de ciberhigiene e formação obrigatória para órgãos de gestão e colaboradores." },
+            { title: "Uso de Criptografia", details: "Políticas e procedimentos para uso adequado de criptografia e encriptação." },
+            { title: "Segurança de Recursos Humanos e Controlo de Acessos", details: "Políticas de controlo de acessos, gestão de ativos e segurança de recursos humanos." },
+            { title: "Autenticação Multifator (MFA) e Comunicações Seguras", details: "Uso de MFA/autenticação contínua, comunicações seguras (voz, vídeo, texto) e sistemas de emergência seguros." }
         ];
 
         const accordionContainer = document.getElementById('securityMeasuresAccordion');
         securityMeasures.forEach((measure, index) => {
             const item = document.createElement('div');
             item.classList.add('border', 'border-gray-200', 'rounded-md');
-            
+
             const button = document.createElement('button');
             button.classList.add('w-full', 'p-4', 'text-left', 'bg-sky-100', 'hover:bg-sky-200', 'focus:outline-none', 'flex', 'justify-between', 'items-center', 'transition-colors');
             button.innerHTML = `
-                <span class="font-medium text-sky-700">${measure.title}</span>
+                <span class="font-medium text-sky-700">${index + 1}. ${measure.title}</span>
                 <svg class="w-5 h-5 text-sky-600 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             `;
-            
+
             const content = document.createElement('div');
             content.classList.add('accordion-content', 'p-4', 'bg-white', 'text-gray-600');
             content.textContent = measure.details;
-            
+
             button.addEventListener('click', () => {
                 const isOpen = content.style.maxHeight && content.style.maxHeight !== "0px";
                 document.querySelectorAll('.accordion-content').forEach(el => el.style.maxHeight = "0px");
                 document.querySelectorAll('#securityMeasuresAccordion button svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
-                
                 if (!isOpen) {
                     content.style.maxHeight = content.scrollHeight + "px";
                     button.querySelector('svg').style.transform = 'rotate(180deg)';
-                } else {
-                    content.style.maxHeight = "0px";
-                    button.querySelector('svg').style.transform = 'rotate(0deg)';
                 }
             });
-            
+
             item.appendChild(button);
             item.appendChild(content);
             accordionContainer.appendChild(item);
         });
 
+        // Notification Timeline Chart
         const notificationTimelineCtx = document.getElementById('notificationTimelineChart').getContext('2d');
         new Chart(notificationTimelineCtx, {
             type: 'bar',
             data: {
-                labels: ['Alerta Precoce', 'Relatório Completo', 'Relatório Final'],
+                labels: ['Alerta Precoce', 'Notificação de Incidente', 'Relatório Final'],
                 datasets: [{
                     label: 'Prazo de Notificação (após conhecimento)',
-                    data: [24, 72, 720], // 720 hours = 30 days for approximation
+                    data: [24, 72, 720],
                     backgroundColor: [
-                        'rgba(255, 159, 64, 0.7)',
-                        'rgba(255, 205, 86, 0.7)',
-                        'rgba(75, 192, 192, 0.7)'
+                        'rgba(239, 68, 68, 0.7)',
+                        'rgba(245, 158, 11, 0.7)',
+                        'rgba(34, 197, 94, 0.7)'
                     ],
                     borderColor: [
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(255, 205, 86, 1)',
-                        'rgba(75, 192, 192, 1)'
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(245, 158, 11, 1)',
+                        'rgba(34, 197, 94, 1)'
                     ],
                     borderWidth: 1
                 }]
@@ -593,34 +718,29 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    x: { 
-                        beginAtZero: true, 
-                        title: { display: true, text: 'Horas (aproximado para Relatório Final)' },
+                    x: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Horas' },
                         ticks: {
-                            callback: function(value, index, values) {
-                                if (value === 24) return '24 Horas';
-                                if (value === 72) return '72 Horas';
-                                if (value === 720) return '1 Mês (aprox. 720h)';
+                            callback: function(value) {
+                                if (value === 24) return '24h';
+                                if (value === 72) return '72h';
+                                if (value === 720) return '1 Mês';
                                 return value;
                             }
                         }
                     }
                 },
                 plugins: {
-                    title: { display: true, text: 'Prazos de Notificação de Incidentes Significativos' },
-                     tooltip: {
+                    title: { display: true, text: 'Prazos de Notificação — DL 125/2025' },
+                    tooltip: {
                         callbacks: {
                             label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
                                 let value = context.parsed.x;
-                                if (value === 24) label += '24 Horas';
-                                else if (value === 72) label += '72 Horas';
-                                else if (value === 720) label += '1 Mês (aprox. 720 Horas)';
-                                else label += value + ' Horas';
-                                return label;
+                                if (value === 24) return '24 Horas — Alerta precoce ao CNCS/CSIRT';
+                                if (value === 72) return '72 Horas — Notificação com avaliação inicial';
+                                if (value === 720) return '1 Mês — Relatório final detalhado';
+                                return value + ' Horas';
                             }
                         }
                     }
@@ -628,19 +748,34 @@
             }
         });
 
+        // Sanctions Tabs
         const sanctionsTabs = document.querySelectorAll('.tab-button');
         const sanctionsContent = document.getElementById('sanctionsContent');
 
         const sanctionsData = {
             ee: {
                 title: "Entidades Essenciais (EE)",
-                fine: "Até €10.000.000 ou 2% do volume de negócios global anual (o que for superior).",
-                other: "Suspensão de licenças, inibição de diretores, ordens corretivas."
+                fine: "Até <strong>€10.000.000</strong> ou <strong>2%</strong> do volume de negócios anual global (o que for superior).",
+                supervision: "Supervisão ex ante e ex post.",
+                other: "Suspensão de licenças, interdição de diretores, publicitação da condenação, proibição de contratação pública, plano de formação obrigatório (6 meses)."
             },
             ei: {
                 title: "Entidades Importantes (EI)",
-                fine: "Até €7.000.000 ou 1,4% do volume de negócios global anual (o que for superior).",
-                other: "Penalidades periódicas, nomeação pública, ordens corretivas."
+                fine: "Até <strong>€7.000.000</strong> ou <strong>1,4%</strong> do volume de negócios anual global (o que for superior).",
+                supervision: "Supervisão ex post.",
+                other: "Penalidades periódicas, publicitação da condenação, proibição de contratação pública, suspensão do serviço, plano de formação obrigatório."
+            },
+            epr_a: {
+                title: "Entidades Públicas Relevantes — Grupo A (≥250 trabalhadores)",
+                fine: "Coimas de <strong>€16.000</strong> a <strong>€4.000.000</strong> para pessoas coletivas.",
+                supervision: "Supervisão ex post.",
+                other: "Coimas para titulares de órgãos (pessoas singulares) até €16.000. Sanções acessórias aplicáveis."
+            },
+            epr_b: {
+                title: "Entidades Públicas Relevantes — Grupo B (75-249 trabalhadores)",
+                fine: "Coimas de <strong>€8.000</strong> a <strong>€350.000</strong> para pessoas coletivas.",
+                supervision: "Supervisão ex post.",
+                other: "Coimas para titulares de órgãos (pessoas singulares) até €16.000. Regime proporcional à dimensão."
             }
         };
 
@@ -650,6 +785,7 @@
                 <div class="p-4 border border-sky-200 rounded-md bg-sky-50">
                     <h4 class="font-semibold text-sky-700 text-lg mb-2">${data.title}</h4>
                     <p class="text-gray-700 mb-1"><span class="font-medium">Coima Máxima:</span> ${data.fine}</p>
+                    <p class="text-gray-700 mb-1"><span class="font-medium">Supervisão:</span> ${data.supervision}</p>
                     <p class="text-gray-700"><span class="font-medium">Outras Medidas:</span> ${data.other}</p>
                 </div>
             `;
@@ -662,8 +798,7 @@
                 displaySanctions(tab.dataset.type);
             });
         });
-        displaySanctions('ee'); // Initial display
-
+        displaySanctions('ee');
     </script>
 </body>
 </html>
