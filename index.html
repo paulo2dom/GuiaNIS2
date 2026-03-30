@@ -356,11 +356,11 @@
             </div>
 
             <h3 class="sub-section-title mt-8">Obrigações de Notificação de Incidentes Significativos</h3>
-            <p class="text-gray-600 mb-4">Qualquer incidente considerado <em>significativo</em> deve ser notificado ao CNCS/CSIRT nacional. As entidades devem também informar os destinatários dos seus serviços em caso de risco elevado.</p>
+            <p class="text-gray-600 mb-4">Qualquer incidente considerado <em>significativo</em> deve ser notificado ao CNCS/CSIRT nacional. As entidades devem também informar os destinatários dos seus serviços em caso de risco elevado (Art. 48.º).</p>
             <div class="chart-container my-4 h-48 md:h-64">
                 <canvas id="notificationTimelineChart"></canvas>
             </div>
-            <p class="text-gray-600 mt-2">Um incidente é "significativo" se causar perturbações graves nos serviços, perdas financeiras relevantes, ou afetar outras pessoas singulares ou colectivas. Se afetar dois ou mais Estados-Membros, o CNCS deve informar os outros Estados afetados e a ENISA.</p>
+            <p class="text-gray-600 mt-2">Um incidente é "significativo" se causar perturbações graves nos serviços, perdas financeiras relevantes, ou afetar outras pessoas singulares ou colectivas (Art. 2.º al. l)). O relatório final deve ser submetido no prazo de <strong>30 dias úteis</strong> após a notificação do fim de impacto significativo (Art. 44.º n.º 1) — não "1 mês" corrido. Se o incidente afetar dois ou mais Estados-Membros, o CNCS deve informar os outros Estados afetados e a ENISA (Art. 50.º).</p>
 
             <div class="mt-6 bg-purple-50 p-4 rounded-lg border border-purple-200">
                 <h4 class="font-semibold text-purple-700 mb-2">Divulgação Coordenada de Vulnerabilidades (CVD)</h4>
@@ -474,7 +474,7 @@
                 </div>
                 <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
                     <h4 class="font-semibold text-sky-700 text-lg mb-1">4. Elabore/Atualize Planos de Resposta a Incidentes</h4>
-                    <p class="text-gray-600">Desenvolva procedimentos alinhados com os prazos de notificação (24h/72h/1 mês) e a obrigação de informar os destinatários dos serviços. Teste regularmente.</p>
+                    <p class="text-gray-600">Desenvolva procedimentos alinhados com os prazos de notificação (24h alerta precoce / 72h atualização / 30 dias úteis relatório final) e a obrigação de informar os destinatários dos serviços (Art. 48.º). Teste regularmente.</p>
                 </div>
                 <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
                     <h4 class="font-semibold text-sky-700 text-lg mb-1">5. Envolva a Administração</h4>
@@ -696,7 +696,7 @@
         new Chart(notificationTimelineCtx, {
             type: 'bar',
             data: {
-                labels: ['Alerta Precoce', 'Notificação de Incidente', 'Relatório Final'],
+                labels: ['Alerta Precoce', 'Notificação de Incidente (atualização)', 'Relatório Final'],
                 datasets: [{
                     label: 'Prazo de Notificação (após conhecimento)',
                     data: [24, 72, 720],
@@ -725,21 +725,21 @@
                             callback: function(value) {
                                 if (value === 24) return '24h';
                                 if (value === 72) return '72h';
-                                if (value === 720) return '1 Mês';
+                                if (value === 720) return '30 dias úteis';
                                 return value;
                             }
                         }
                     }
                 },
                 plugins: {
-                    title: { display: true, text: 'Prazos de Notificação — DL 125/2025' },
+                    title: { display: true, text: 'Prazos de Notificação — DL 125/2025 (Art. 42.º-44.º)' },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
                                 let value = context.parsed.x;
-                                if (value === 24) return '24 Horas — Alerta precoce ao CNCS/CSIRT';
-                                if (value === 72) return '72 Horas — Notificação com avaliação inicial';
-                                if (value === 720) return '1 Mês — Relatório final detalhado';
+                                if (value === 24) return '24 Horas — Alerta precoce ao CNCS/CSIRT (Art. 42.º)';
+                                if (value === 72) return '72 Horas — Atualização com avaliação inicial, quando necessário (Art. 42.º n.º 3)';
+                                if (value === 720) return '30 dias úteis — Relatório final após fim do impacto (Art. 44.º)';
                                 return value + ' Horas';
                             }
                         }
